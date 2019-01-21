@@ -1,0 +1,100 @@
+<!DOCTYPE HTML>
+<html>
+<title>Тестування</title>
+<head>
+
+  <meta charset="utf-8">
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<style>
+h1{color:red;}
+h3{color:darkblue;}
+#result{color:red;
+font-size:20px;
+font-weight:bold;}
+</style>
+<body>
+<div id="test">
+<h1>{{test.title}}</h1>
+<div v-for="(question, index) in test.questions">
+<h3>{{question.text}}</h3>
+<ul>
+<li v-for="answer in question.answers">
+<label>
+<input type="radio" v-bind:value = "answer.correct"
+v-bind:name="index"
+v-model="userAnswers[index]">{{answer.text}}
+</label>
+</li>
+</ul>
+</div>
+<div id="result">Кількість правильних відповідей:{{score()}}</div>
+</div>
+<script>
+var test = {
+title:'Тестування по темі "Інформаційна система',
+questions:[
+
+{text:'1. Дані та відомості, представлені у різних виглядах',
+answers:[
+{text:'інформація',correct:true},
+{text:'повідомлення'},
+{text:'текст'}
+]
+},
+
+{text:'2. Інформація передається за допомогою',
+answers:[
+{text:'книжок'},
+{text:'Інтернету'},
+{text:'повідомлень',correct:true}
+]
+},
+
+{text:'3. Шелест листя - це ... повідомлення',
+answers:[
+{text:'звукове',correct:true},
+{text:'текстове'},
+{text:'графічне'}
+]
+},
+
+{text:'4. До якого способову повідомлень відносяться жести регулювальника',
+answers:[
+{text:'графічного'},
+{text:'комбінованого'},
+{text:'жести',correct:true}
+]
+},
+
+{text:'5. Запис інформації на диск - це процес ... інформації',
+answers:[
+{text:'зберігання',correct:true},
+{text:'передавання'},
+{text:'опрацювання'}
+]
+},
+
+
+
+
+]
+};
+var app = new Vue({
+el:"#test",
+data:{
+test:test,
+userAnswers:Array(test.questions.length).fill(false)
+},
+methods:{
+score:function(){
+return this.userAnswers.filter(function(val){
+return val}).length;
+}
+}
+});
+</script>
+
+</body>
+
+</html>
